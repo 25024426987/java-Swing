@@ -14,12 +14,13 @@ public class App {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
-                if(e.getKeyCode() == KeyEvent.VK_ENTER)
-                if ((textArea_A.getText()).equals("www")){
-                    textArea_B.setText("输入正确");
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    if ((textArea_A.getText()).equals("www")){
+                        textArea_B.setText("输入正确");
 
-                }else{
-                    textArea_B.setText("输入错误");
+                    }else{
+                        textArea_B.setText("输入错误");
+                    }
                 }
                 if (e.getKeyCode() == KeyEvent.VK_DOWN){
                     textArea_B.setText("");
