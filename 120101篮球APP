@@ -1,0 +1,92 @@
+import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.Random;
+
+public class App {
+    JPanel myPanel=new JPanel();
+    JLabel label_ball = new JLabel();
+    JLabel label_background = new JLabel();
+    JLabel label_basket = new JLabel();
+    int cell=64;
+    int row=1,column=1;
+
+    Random randow = new Random();
+    int r=randow.nextInt(16)*64;
+    int c=randow.nextInt(12)*64;
+    //构造方法
+    public App() {
+        myPanel.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                int x=row*cell,y=column*64;
+                if (e.getKeyCode()==KeyEvent.VK_UP){
+                    if (y>0){
+                        column--;
+                        label_ball.setBounds(row*cell,column*cell,cell,cell);
+                    }
+                }
+                if (e.getKeyCode()==KeyEvent.VK_DOWN){
+                    if (y<=768){
+                        column++;
+                        label_ball.setBounds(row*cell,column*cell,cell,cell);
+                    }
+                }
+                if (e.getKeyCode()==KeyEvent.VK_LEFT){
+                    if (x>0){
+                        row--;
+                        label_ball.setBounds(row*cell,column*cell,cell,cell);
+                    }
+                }
+                if (e.getKeyCode()==KeyEvent.VK_RIGHT){
+                    if (x<=1024){
+                        row++;
+                        label_ball.setBounds(row*cell,column*cell,cell,cell);
+                    }
+                }
+                if (label_basket.getX()==label_ball.getX()&&label_basket.getY()==label_ball.getY()){
+                    JOptionPane.showMessageDialog(null,"球进了");
+                    int r=randow.nextInt(16)*64;
+                    int c=randow.nextInt(12)*64;
+                    label_basket.setBounds(r,c,cell,cell);
+                }
+            }
+        });
+    }
+    //显示窗体方法
+    void go(){
+
+        java.net.URL imgURL = App.class.getResource("img/ball.gif");
+        label_ball.setIcon(new ImageIcon(imgURL));
+        label_ball.setBounds(64,64,cell,cell);
+
+
+        java.net.URL imgURL2 = App.class.getResource("img/basket.jpg");
+        label_basket.setIcon(new ImageIcon(imgURL2));
+        label_basket.setBounds(r,c,64,64);
+
+        java.net.URL imgURL3 = App.class.getResource("img/768.png");
+        label_background.setIcon(new ImageIcon(imgURL3));
+        label_background.setBounds(0,0,1024,768);
+
+
+        //在panel中添加组件
+        myPanel.add(label_ball);
+        myPanel.add(label_basket);
+        myPanel.add(label_background);
+
+
+        myPanel.setLayout(null);
+        JFrame frame = new JFrame("篮球");
+        frame.setContentPane(myPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBounds(100,100,1024,768);
+        //frame.pack();
+        frame.setVisible(true);
+        myPanel.setFocusable(true);//键盘监听必须加panel面板的焦点获取才可以
+    }
+    public static void main(String[] args) {
+        new App().go();
+    }
+}
